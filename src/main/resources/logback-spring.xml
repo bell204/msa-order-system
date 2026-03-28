@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 로그 경로 -->
+    <property name="LOG_PATH" value="C:/log/logs"/>
+
+    <!-- 콘솔 로그 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 날짜별 파일 로그 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 현재 로그 파일 -->
+        <file>${LOG_PATH}/application.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 날짜별 로그 파일 -->
+            <fileNamePattern>${LOG_PATH}/application.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+            <!-- 보관 기간 (30일) -->
+            <maxHistory>30</maxHistory>
+
+            <!-- 총 용량 제한 (선택) -->
+            <!-- <totalSizeCap>3GB</totalSizeCap> -->
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ================= 세션 전용 파일 로그 ================= -->
+    <appender name="SESSION_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/session.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/session.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 기본 로그 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <!-- ================= 세션 패키지만 분리 ================= -->
+    <logger name="SESSION_LOGGER" level="INFO" additivity="false">
+        <appender-ref ref="SESSION_FILE"/>
+    </logger>
+
+
+    <!-- 프로젝트 로그 -->
+    <logger name="com.msr" level="DEBUG"/>
+
+    <!-- JDBC 파라미터 로그 -->
+    <logger name="org.springframework.jdbc.core" level="TRACE"/>
+
+</configuration>

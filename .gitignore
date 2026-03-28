@@ -1,0 +1,29 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/resources/archetype-resources/google_checks.xml
+!**/src/main/resources/archetype-resources/checkstyle.xml
+bin/
+build/
+.idea/
+*.iml
+*.iws
+.project
+.settings
+.classpath
+.DS_Store
+*.swp
+*.lock
+.env
+
+# Docker data
+postgres_data/
+
+# JetBrains IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Maven build output
+target/
