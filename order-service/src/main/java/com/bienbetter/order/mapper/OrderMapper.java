@@ -1,6 +1,6 @@
-package com.bienbetter.shop.order.mapper;
+package com.bienbetter.order.mapper;
 
-import com.bienbetter.shop.order.entitiy.Order;
+import com.bienbetter.order.entitiy.Order;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

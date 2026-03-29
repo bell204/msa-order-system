@@ -1,7 +1,7 @@
-package com.bienbetter.shop.order.controller;
+package com.bienbetter.order.controller;
 
-import com.bienbetter.shop.order.dto.OrderRequest;
-import com.bienbetter.shop.order.service.OrderService;
+import com.bienbetter.common.event.OrderCreatedEvent;
+import com.bienbetter.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ public class OrderController {
     private final OrderService orderService; // Producer를 직접 부르지 않고 Service를 거침
 
     @PostMapping
-    public ResponseEntity<String> createOrder(@RequestBody OrderRequest request) {
+    public ResponseEntity<String> createOrder(@RequestBody OrderCreatedEvent request) {
         // 비즈니스 로직(DB 저장 + Kafka 발행)은 서비스에서 처리
         String orderId = orderService.processOrder(request);
 

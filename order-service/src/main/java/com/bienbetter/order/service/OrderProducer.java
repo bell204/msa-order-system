@@ -1,6 +1,6 @@
-package com.bienbetter.shop.order.service;
+package com.bienbetter.order.service;
 
-import com.bienbetter.shop.order.dto.OrderRequest;
+import com.bienbetter.common.event.OrderCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -11,21 +11,22 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderProducer {
 
-    private final KafkaTemplate<String, OrderRequest> kafkaTemplate;
+    private final KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
     private static final String TOPIC = "order-topic";
 
-    public void sendOrder(OrderRequest order) {
-        log.info("카프카 메시지 발행 시작: {}", order.orderId());
+    public void sendOrder(OrderCreatedEvent event) {
+        log.info("카프카 메시지 발행 시작: {}", event.getOrderId());
 
-        kafkaTemplate.send(TOPIC, order.orderId(), order)
+        // 메시지 키를 orderId로 설정하여 순서 보장 (필요시)
+        kafkaTemplate.send(TOPIC, event.getOrderId(), event)
                 .whenComplete((result, ex) -> {
                     if (ex == null) {
                         log.info("메시지 전송 성공: topic={}, offset={}",
                                 result.getRecordMetadata().topic(),
                                 result.getRecordMetadata().offset());
                     } else {
-                        log.error("메시지 전송 실패: {}", ex.getMessage());
-                        // 추가 로직: 실패 시 별도 DB에 로깅하거나 재시도 큐에 넣는 로직이 들어갈 수 있음
+                        log.error("메시지 전송 실패: orderId={}, error={}",
+                                event.getOrderId(), ex.getMessage());
                     }
                 });
     }
