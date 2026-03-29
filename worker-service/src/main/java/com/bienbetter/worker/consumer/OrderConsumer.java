@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class OrderEventConsumer {
+public class OrderConsumer {
 
     @KafkaListener(topics = "order-topic", groupId = "worker-group")
     public void consume(OrderCreatedEvent event) {

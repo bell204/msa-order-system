@@ -1,0 +1,18 @@
+server:
+  port: 8081 # 서비스별로 8081 등으로 변경
+
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5433/order_db
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: worker-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.bienbetter.*"
