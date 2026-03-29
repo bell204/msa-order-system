@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: local # 기본값을 local로 설정 (IDE 실행 시 편리)
+
+# 공통 프레임워크 설정
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.bienbetter.order.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.bienbetter.order: debug
+    org.springframework.kafka: info
