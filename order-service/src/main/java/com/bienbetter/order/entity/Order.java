@@ -1,4 +1,4 @@
-package com.bienbetter.order.entitiy;
+package com.bienbetter.order.entity;
 
 import lombok.Builder;
 import lombok.Data;

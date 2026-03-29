@@ -1,7 +1,7 @@
 package com.bienbetter.order.service;
 
 import com.bienbetter.common.event.OrderCreatedEvent;
-import com.bienbetter.order.entitiy.Order;
+import com.bienbetter.order.entity.Order;
 import com.bienbetter.order.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
